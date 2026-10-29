@@ -3,16 +3,16 @@ import { AnimatePresence } from 'framer-motion';
 import Lenis from 'lenis';
 import { gsap, ScrollTrigger } from './lib/gsap.js';
 import { setLenis, getLenis } from './lib/lenis.js';
+import Background from './components/Background.jsx';
 import Preloader from './components/Preloader.jsx';
-import CustomCursor from './components/CustomCursor.jsx';
 import Navbar from './components/Navbar.jsx';
 import Hero from './components/Hero.jsx';
-import AboutEducationBento from './components/AboutEducationBento.jsx';
+import AboutEducation from './components/AboutEducation.jsx';
 import ExperienceSection from './components/ExperienceSection.jsx';
 import ProjectsShowcase from './components/ProjectsShowcase.jsx';
-import AwardsBento from './components/AwardsBento.jsx';
+import AwardsSection from './components/AwardsSection.jsx';
 import OrganizationsSection from './components/OrganizationsSection.jsx';
-import SkillsMarquee from './components/SkillsMarquee.jsx';
+import SkillsSection from './components/SkillsSection.jsx';
 import Footer from './components/Footer.jsx';
 
 export default function App() {
@@ -20,11 +20,11 @@ export default function App() {
   const progress = useRef(null);
   const handleComplete = useCallback(() => setReady(true), []);
 
-  // Inertial smooth scroll, synced with GSAP ScrollTrigger.
+  // Inertial smooth scrolling (Lenis), synced with GSAP ScrollTrigger.
   useEffect(() => {
     const lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
     setLenis(lenis);
-    lenis.stop(); // locked until the preloader finishes
+    lenis.stop(); // locked until the curtain opens
     lenis.on('scroll', ScrollTrigger.update);
 
     const tick = (time) => lenis.raf(time * 1000);
@@ -65,32 +65,30 @@ export default function App() {
 
   return (
     <>
-      <div className="aurora" aria-hidden />
-      <div className="noise-overlay" aria-hidden />
+      <Background />
       <div
         ref={progress}
-        className="fixed left-0 top-0 z-[85] h-[3px] w-full origin-left scale-x-0 bg-accent"
+        className="fixed left-0 top-0 z-[90] h-[3px] w-full origin-left scale-x-0 bg-accent"
         aria-hidden
       />
 
-      <CustomCursor />
-
-      <AnimatePresence>{!ready && <Preloader key="preloader" onComplete={handleComplete} />}</AnimatePresence>
+      <AnimatePresence>
+        {!ready && <Preloader key="preloader" onComplete={handleComplete} />}
+      </AnimatePresence>
 
       <Navbar ready={ready} />
 
       <main className="relative z-10">
         <Hero ready={ready} />
-        <AboutEducationBento />
+        <AboutEducation />
         <ExperienceSection />
         <ProjectsShowcase />
-        <AwardsBento />
+        <AwardsSection />
         <OrganizationsSection />
-        <SkillsMarquee />
+        <SkillsSection />
       </main>
 
       <Footer />
     </>
   );
 }
-

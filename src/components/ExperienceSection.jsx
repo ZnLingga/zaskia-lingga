@@ -1,65 +1,53 @@
 import { Building2, MapPin } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData.js';
+import { ui } from '../data/ui.js';
+import { useLang } from '../context/LanguageContext.jsx';
 import SectionHeading from './ui/SectionHeading.jsx';
-import SpotlightCard from './ui/SpotlightCard.jsx';
+import Card from './ui/Card.jsx';
 import Reveal from './ui/Reveal.jsx';
 
 const { experience } = portfolioData;
 
 export default function ExperienceSection() {
+  const { t } = useLang();
+
   return (
-    <section id="experience" className="relative z-10 px-5 py-24 md:px-10 md:py-36">
-      <div className="mx-auto max-w-[1400px]">
-        <SectionHeading index="02" kicker="Experience" title="Where theory meets production" />
+    <section id="experience" className="relative z-10 px-6 py-24 md:px-10 md:py-32">
+      <div className="mx-auto max-w-[1200px]">
+        <SectionHeading index="02" title={t(ui.experience.title)} />
 
-        <div className="relative space-y-6 md:pl-14">
-          <div className="absolute bottom-0 left-4 top-2 hidden w-px bg-gradient-to-b from-accent via-line to-transparent md:block" />
-
+        <div className="space-y-6">
           {experience.map((job) => (
-            <Reveal key={job.company} className="relative">
-              <span className="absolute -left-[3.05rem] top-9 hidden h-3 w-3 rounded-full border-2 border-accent bg-ink md:block">
-                <span className="absolute inset-0 animate-ping rounded-full bg-accent/60" />
-              </span>
+            <Reveal key={job.company}>
+              <Card className="grid gap-10 p-7 md:p-10 lg:grid-cols-[0.8fr_1.2fr]">
+                <div>
+                  <span className="inline-block rounded-full bg-accent/10 px-4 py-1.5 text-base font-semibold text-accent">
+                    {t(job.period)}
+                  </span>
+                  <h3 className="mt-6 text-3xl font-extrabold leading-tight md:text-4xl">{job.company}</h3>
+                  <p className="mt-3 text-xl text-fg/80">{t(job.role)}</p>
 
-              <SpotlightCard>
-                <div className="grid gap-10 p-7 md:p-10 lg:grid-cols-12">
-                  <div className="lg:col-span-5">
-                    <span className="inline-block rounded-full border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-accent">
-                      {job.period}
+                  <div className="mt-6 flex flex-wrap gap-2.5 text-base text-muted">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2">
+                      <Building2 size={16} /> {t(job.mode)}
                     </span>
-                    <h3 className="mt-6 font-display text-3xl font-bold leading-tight md:text-5xl">
-                      {job.company}
-                    </h3>
-                    <p className="mt-3 text-lg text-white/80">{job.role}</p>
-
-                    <div className="mt-6 flex flex-wrap gap-2 text-sm text-muted">
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5">
-                        <Building2 size={13} /> {job.mode}
-                      </span>
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5">
-                        <MapPin size={13} /> {job.location}
-                      </span>
-                    </div>
+                    <span className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2">
+                      <MapPin size={16} /> {t(job.location)}
+                    </span>
                   </div>
-
-                  <ol className="space-y-2 lg:col-span-7">
-                    {job.highlights.map((h, i) => (
-                      <li
-                        key={i}
-                        data-cursor
-                        className="group flex gap-4 rounded-2xl border border-transparent p-4 transition-colors hover:border-line hover:bg-white/[0.03]"
-                      >
-                        <span className="font-mono text-xs text-accent">
-                          {String(i + 1).padStart(2, '0')}
-                        </span>
-                        <p className="text-[15px] leading-relaxed text-white/75 transition-colors group-hover:text-white">
-                          {h}
-                        </p>
-                      </li>
-                    ))}
-                  </ol>
                 </div>
-              </SpotlightCard>
+
+                <ol className="space-y-5">
+                  {job.highlights.map((h, i) => (
+                    <li key={i} className="flex gap-4">
+                      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/10 text-sm font-bold text-accent">
+                        {i + 1}
+                      </span>
+                      <p className="text-lg leading-relaxed text-fg/80">{t(h)}</p>
+                    </li>
+                  ))}
+                </ol>
+              </Card>
             </Reveal>
           ))}
         </div>
@@ -67,4 +55,3 @@ export default function ExperienceSection() {
     </section>
   );
 }
-

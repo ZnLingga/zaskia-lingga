@@ -1,20 +1,29 @@
 <!doctype html>
-<html lang="id">
+<html lang="id" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Zaskia Nurismi Lingga — Portfolio</title>
+    <title>Zaskia Nurismi Lingga — Portofolio</title>
     <meta
       name="description"
-      content="Portofolio Zaskia Nurismi Lingga — Computer Science Undergraduate, Information Systems & Data Science, Full-Stack Developer, dan peraih medali Taekwondo."
+      content="Portofolio Zaskia Nurismi Lingga — mahasiswa Informatika, Data Science & Machine Learning, Full-Stack Developer, dan peraih medali Taekwondo."
     />
-    <meta name="theme-color" content="#070709" />
-    <meta property="og:title" content="Zaskia Nurismi Lingga — Portfolio" />
+    <meta name="theme-color" content="#060E2B" />
+    <meta property="og:title" content="Zaskia Nurismi Lingga — Portofolio" />
     <meta
       property="og:description"
-      content="Information Systems & Data Science talent × Taekwondo medalist."
+      content="Informatics undergraduate · Data Science & Machine Learning · Taekwondo medalist."
     />
     <meta property="og:type" content="website" />
+
+    <!-- Apply saved theme / language before first paint (no flash) -->
+    <script>
+      try {
+        var theme = localStorage.getItem('theme') === 'light' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.lang = localStorage.getItem('lang') === 'en' ? 'en' : 'id';
+      } catch (e) {}
+    </script>
 
     <!-- Favicon (generated from the main profile photo) -->
     <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
@@ -25,7 +34,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -34,4 +43,3 @@
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
-

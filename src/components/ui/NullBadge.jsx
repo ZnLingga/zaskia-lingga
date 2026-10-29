@@ -1,47 +1,14 @@
 /**
- * Renders "empty" CV values (null. / -) as an intentional developer-terminal element
+ * Renders "empty" CV values (null / '-') as a small intentional pill
  * instead of a blank space. The original value is shown verbatim.
  */
-export default function NullBadge({
-  label = 'status',
-  value = 'null.',
-  hint = 'documentation_pending',
-  variant = 'pill',
-  className = '',
-}) {
-  if (variant === 'terminal') {
-    return (
-      <div
-        className={`rounded-2xl border border-line bg-black/50 p-4 font-mono text-xs leading-relaxed text-muted ${className}`}
-      >
-        <div className="mb-2 flex items-center gap-1.5">
-          <span className="h-2 w-2 rounded-full bg-ember/80" />
-          <span className="h-2 w-2 rounded-full bg-yellow-400/70" />
-          <span className="h-2 w-2 rounded-full bg-accent/80" />
-          <span className="ml-2 text-[10px] uppercase tracking-widest text-white/30">{label}.txt</span>
-        </div>
-        <p>
-          <span className="text-accent">$</span> cat {label}.txt
-        </p>
-        <p className="text-white/80">{value}</p>
-        <p className="text-white/30">// {hint}</p>
-        <p>
-          <span className="text-accent">$</span> <span className="blink">▍</span>
-        </p>
-      </div>
-    );
-  }
-
+export default function NullBadge({ label, value = 'null', className = '' }) {
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full border border-dashed border-white/15 bg-white/[0.03] px-3 py-1 font-mono text-[11px] text-muted ${className}`}
+      className={`inline-flex items-center gap-2 rounded-full border border-dashed border-line px-3 py-1 text-sm text-muted ${className}`}
     >
-      <span className="text-white/30">[</span>
-      <span>
-        {label}: <span className="text-accent">{value}</span>
-      </span>
-      <span className="text-white/30">// {hint} ]</span>
+      {label && <span>{label}</span>}
+      <span className="font-semibold text-accent">{value}</span>
     </span>
   );
 }
-

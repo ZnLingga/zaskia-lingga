@@ -1,17 +1,11 @@
 import Reveal from './Reveal.jsx';
 
-export default function SectionHeading({ index, kicker, title }) {
+export default function SectionHeading({ index, title }) {
   return (
     <Reveal className="mb-12 md:mb-16">
-      <div className="mb-4 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.3em] text-muted">
-        <span className="text-accent">{index}</span>
-        <span className="h-px w-10 bg-line" />
-        <span>{kicker}</span>
-      </div>
-      <h2 className="font-display text-4xl font-extrabold uppercase leading-[0.95] tracking-tight md:text-6xl lg:text-7xl">
-        {title}
-      </h2>
+      <p className="mb-3 text-base font-bold tracking-[0.2em] text-accent">{index}</p>
+      <h2 className="text-4xl font-extrabold tracking-tight md:text-6xl">{title}</h2>
+      <div className="mt-6 h-1.5 w-16 rounded-full bg-accent" />
     </Reveal>
   );
 }
-

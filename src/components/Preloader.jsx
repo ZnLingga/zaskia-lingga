@@ -1,24 +1,32 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useLang } from '../context/LanguageContext.jsx';
+import { ui } from '../data/ui.js';
 
+const CURTAIN = '#0A1B5C'; // deep blue, same in both themes
+const EASE = [0.76, 0, 0.24, 1];
+
+/**
+ * Minimal theatre-curtain loader: two deep-blue panels hold a name, a hairline progress bar
+ * and a counter, then slide apart to reveal the page. Runs on every load / refresh.
+ */
 export default function Preloader({ onComplete }) {
+  const { t } = useLang();
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    const duration = 2200;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const duration = reduced ? 400 : 1700;
     const start = performance.now();
     let raf;
     let timeout;
 
     const tick = (now) => {
       const p = Math.min((now - start) / duration, 1);
-      const eased = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+      const eased = 1 - Math.pow(1 - p, 3);
       setCount(Math.round(eased * 100));
-      if (p < 1) {
-        raf = requestAnimationFrame(tick);
-      } else {
-        timeout = setTimeout(onComplete, 350);
-      }
+      if (p < 1) raf = requestAnimationFrame(tick);
+      else timeout = setTimeout(onComplete, 250);
     };
     raf = requestAnimationFrame(tick);
 
@@ -30,30 +38,48 @@ export default function Preloader({ onComplete }) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[100] flex flex-col justify-between bg-[#070709] p-6 md:p-10"
-      initial={{ y: 0 }}
-      exit={{ y: '-100%' }}
-      transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
+      className="fixed inset-0 z-[100]"
+      role="status"
+      aria-label={t(ui.loading)}
+      exit={{ pointerEvents: 'none' }}
     >
-      <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.3em] text-muted md:text-xs">
-        <span>Zaskia Nurismi Lingga</span>
-        <span>Portfolio — 2026</span>
-      </div>
+      {/* Curtain panels */}
+      <motion.div
+        className="absolute inset-y-0 left-0 w-1/2"
+        style={{ background: CURTAIN }}
+        exit={{ x: '-100%' }}
+        transition={{ duration: 1.1, ease: EASE }}
+      />
+      <motion.div
+        className="absolute inset-y-0 right-0 w-1/2"
+        style={{ background: CURTAIN }}
+        exit={{ x: '100%' }}
+        transition={{ duration: 1.1, ease: EASE }}
+      />
 
-      <div className="flex items-end justify-between">
-        <div className="font-mono text-[28vw] font-bold leading-[0.8] tracking-tighter text-white md:text-[20vw]">
-          {String(count).padStart(2, '0')}
-          <span className="text-accent text-[8vw] md:text-[5vw]">%</span>
+      {/* Centered content */}
+      <motion.div
+        className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center text-white"
+        exit={{ opacity: 0, y: -12 }}
+        transition={{ duration: 0.4, ease: 'easeIn' }}
+      >
+        <p className="text-sm font-semibold uppercase tracking-[0.35em] text-white/60">
+          {t(ui.loading)}
+        </p>
+        <p className="mt-5 text-3xl font-extrabold tracking-tight md:text-5xl">
+          Zaskia Nurismi Lingga
+        </p>
+
+        <div className="mt-10 h-px w-48 overflow-hidden bg-white/20 md:w-72">
+          <div
+            className="h-full bg-sky-300"
+            style={{ width: `${count}%`, transition: 'width 80ms linear' }}
+          />
         </div>
-      </div>
-
-      <div className="absolute inset-x-0 bottom-0 h-1 bg-line">
-        <div
-          className="h-full bg-accent"
-          style={{ width: `${count}%`, transition: 'width 80ms linear' }}
-        />
-      </div>
+        <p className="mt-4 text-base font-semibold tabular-nums text-white/70">
+          {String(count).padStart(3, '0')}
+        </p>
+      </motion.div>
     </motion.div>
   );
 }
-

@@ -1,23 +1,24 @@
 /** @type {import('tailwindcss').Config} */
+// Colors read CSS variables (see index.css) so dark / light themes swap instantly.
+const token = (name) => `rgb(var(--${name}) / <alpha-value>)`;
+
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
       colors: {
-        ink: '#070709',
-        surface: '#111116',
-        line: '#1E1E26',
-        accent: '#D4FF3A',
-        ember: '#FF5A36',
-        muted: '#8B8B99',
+        ink: token('bg'),
+        surface: token('surface'),
+        line: token('line'),
+        fg: token('fg'),
+        muted: token('muted'),
+        accent: token('accent'),
+        onaccent: token('on-accent'),
       },
       fontFamily: {
-        display: ['Syne', 'system-ui', 'sans-serif'],
-        body: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
       },
     },
   },
   plugins: [],
 };
-

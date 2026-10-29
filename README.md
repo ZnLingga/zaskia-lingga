@@ -15,10 +15,16 @@ npm run dev      # development
 npm run build    # production build -> dist/
 ```
 
+## ✨ Fitur
+- Tema **dark / light** (biru tua) — pilihan tersimpan, default dark
+- Bahasa **ID / EN** — pilihan tersimpan, default ID
+- Curtain loader minimalis setiap load / refresh, smooth scrolling (Lenis), background bergerak
+
 ## ✏️ Mengubah Konten
-Semua data CV ada di satu file: `src/data/portfolioData.js`.
-Field bernilai `null.` / `-` otomatis tampil sebagai badge "documentation_pending",
-dan link `<linkedin>`, `<github>`, `<portfoliolink>` akan aktif otomatis setelah diganti URL asli.
+- Data CV (ID + EN): `src/data/portfolioData.js` — setiap teks ditulis `L("Indonesia", "English")`.
+- Teks antarmuka (menu, judul section): `src/data/ui.js`.
+- Field bernilai `null` / `-` tampil sebagai badge kecil, dan link `<linkedin>` akan aktif otomatis setelah diganti URL asli.
+- File CV untuk tombol "Unduh CV": `public/CV-Zaskia-Nurismi-Lingga.pdf` (ganti dengan versi terbaru bila ada).
 
 ## 🚀 Deployment (GitHub Pages)
 Push ke branch `main` — workflow `.github/workflows/deploy.yml` akan build & deploy otomatis.
